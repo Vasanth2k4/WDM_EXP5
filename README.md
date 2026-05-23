@@ -1,5 +1,4 @@
 ### EX5 Information Retrieval Using Boolean Model in Python
-### DATE: 
 ### AIM: To implement Information Retrieval Using Boolean Model in Python.
 ### Description:
 <div align = "justify">
@@ -62,7 +61,31 @@ The Boolean model in Information Retrieval (IR) is a fundamental model used for 
         print(list(self.index.keys()))
 
     def boolean_search(self, query):
-        # TYPE YOUR CODE HERE
+        query = query.lower().split()
+        result = set(self.documents.keys())
+
+        i = 0
+        while i < len(query):
+            term = query[i]
+
+            if term == "and":
+                i += 1
+                next_term = query[i]
+                result = result.intersection(self.index.get(next_term, set()))
+
+            elif term == "or":
+                i += 1
+                next_term = query[i]
+                result = result.union(self.index.get(next_term, set()))
+            elif term == "not":
+                i += 1
+                next_term = query[i]
+                result = result.difference(self.index.get(next_term, set()))
+            else:
+                result = self.index.get(term, set())
+            i += 1
+        return result
+
 
 if __name__ == "__main__":
     indexer = BooleanRetrieval()
@@ -90,4 +113,28 @@ if __name__ == "__main__":
 
 ### Output:
 
+### Query 1:
+
+```
+Python and language
+```
+
+<img width="1304" height="605" alt="image" src="https://github.com/user-attachments/assets/3b704b7e-6d07-41b4-98bf-ad7c8ae83cac" />
+
+
+```
+not retrieval
+```
+<img width="1280" height="605" alt="image" src="https://github.com/user-attachments/assets/be800db5-04d8-4391-8a6b-3389fbddcb5e" />
+
+
+```
+python or information
+```
+<img width="1320" height="596" alt="image" src="https://github.com/user-attachments/assets/20b14846-f3e5-4091-836d-99d045102407" />
+
+
+
 ### Result:
+
+Thus the implementation of Information Retrieval Using Boolean Model in Python is successfully completed.
